@@ -66,7 +66,7 @@ $(window).on('load', function() {
                 console.log(errorMsg);
                 return;
             }
-            $('#content').text('submitted new greeting to blockchain, transaction hash: ' + txHash);
+            $('#content').text('submitted new greeting to blockchain, transaction hash: ' + txHash + ', greeting: ' + newGreeting);
         });
     });
 
