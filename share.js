@@ -419,6 +419,15 @@ function pollStateString() {
                 }
             }
         });
+
+        contractInstance.getBalance(function (err, balance) {
+            if (err) {
+                console.log("Error: " + err);
+            }else{
+                $('#cash').text('Balance: ' + balance + ' $$$$$$');
+            }
+        });
+
     }else{
         console.log('addr not valid');
         
