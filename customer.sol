@@ -10,11 +10,21 @@ contract Customer {
 address public customerAddress;
 address public parnterAddress;
 mapping (address => uint) public balances;
-enum State {unused, driveAlone, driveWith, waiting, inCar, delivered}
+
+/* States:
+* 1: unused
+* 2: driveAlone
+* 3: driveWith
+* 4: waiting
+* 5: inCar
+* 6: delivered
+*/
+enum state {unused, driveAlone, driveWith, waiting, inCar, delivered}
+state public currentState;
 
 function Customer() public{
     customerAddress = msg.sender;
-    this.State = unused;
+    currentState = state.unused;
     balances[customerAddress] = 100;
 }
 
@@ -51,3 +61,4 @@ function pAck(address driver) public {
     
 }
 
+}
