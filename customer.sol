@@ -10,7 +10,7 @@ contract Customer {
 address public customerAddress;
 address public parnterAddress;
 mapping (address => uint) public balances;
-enum State{unused, driveAlone, driveWith, waiting, inCar, delivered};
+enum State {unused, driveAlone, driveWith, waiting, inCar, delivered}
 
 function Customer() public{
     customerAddress = msg.sender;
