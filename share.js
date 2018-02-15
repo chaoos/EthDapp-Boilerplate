@@ -403,23 +403,25 @@ function pollStateString() {
     
     if (addr !== "") {
         //constant states
-        const states = ["available", "passengerOnBoard", "gettingALift"]; 
+        var states = ["available", "passengerOnBoard", "gettingALift"];
         
         contractInstance = web3.eth.contract(contractAbi).at(addr);
+        console.log(contractInstance);
+        
         contractInstance.getState(function (err, state) {
             if (err) {
-                console.error("Error: " + err);
+                console.log("Error: " + err);
             }else{
                 console.log(state);
                 $('#state').text('Smart Contract State: ' + states[state]);
                 if (states[state] == "passengerOnBoard" || states[state] == "gettingALift"){
-                    $("#ack").attr("style", "visibility: visible")
+                    $("#ack").attr("style", "visibility: visible");
                 }
             }
         });
-        if (states[state] == "passengerOnBoard" || states[state] == "gettingALift"){
-            $("#ack").attr("style", "visibility: visible")
-        }
+    }else{
+        console.log('addr not valid');
+        
     }
     
 }
