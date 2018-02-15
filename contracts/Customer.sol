@@ -10,7 +10,7 @@ contract Customer {
 /* States:
 * 0: unused
 * 1: driveWith
-* 3: inCar
+* 2: inCar
 */
 enum state {unused, driveWith, inCar}
 
