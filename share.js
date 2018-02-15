@@ -382,10 +382,38 @@ $(window).on('load', function() {
             });
         }
     });
-
+    setInterval(pollStateString, 5000);
 });
 
 function cb(error, response) {
     // callback as helper function for debugging purposes
     console.log('error: ' + error + ', response: ' + response);
+}
+
+function addressFromCssSelector(selector) {
+    return $(selector).val();
+}
+
+function customerStateFromAddress(address, callback) {
+}
+
+function pollStateString() {
+    var addr = addressFromCssSelector('#me');
+    console.log(addr);
+    
+    if (addr !== "") {
+        //constant states
+        const states = ["unused", "driveAlone", "driveWith", "waiting", "inCar", "delivered"]; 
+        
+        contractInstance = web3.eth.contract(contractAbi).at(addr);
+        contractInstance.getState(function (err, state) {
+            if (err) {
+                console.error(err);
+            }else
+            console.log(state);
+            $('#state').text('Smart Contract State: ' + states[state]);
+            
+        });
+    }
+    
 }
