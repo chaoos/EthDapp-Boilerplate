@@ -8,15 +8,16 @@ pragma solidity ^0.4.18;
 contract Customer {
 
 /* States:
-* 1: unused
-* 2: driveAlone
-* 3: driveWith
-* 4: waiting
-* 5: inCar
-* 6: delivered
+* 0: unused
+* 1: driveAlone
+* 2: driveWith
+* 3: waiting
+* 4: inCar
+* 5: delivered
 */
 enum state {unused, driveAlone, driveWith, waiting, inCar, delivered}
 
+address owner;
 address public customerAddress;
 address public partnerAddress;
 state public currentState;
@@ -72,10 +73,11 @@ function setState(state a) public {
 
 
 
-function Customer() public payable {
-    customerAddress = msg.sender;
+function Customer() payable public {
+    customerAddress = address(this);
     currentState = state.unused;
     price = msg.value;
+    owner = msg.sender;
 }
 
 
