@@ -29,4 +29,5 @@ HD Wallet
 Mnemonic:      doom and destruction
 Base HD Path:  m/44'/60'/0'/0/{account_index}
 ```
-
+### Contracts
+We build a Contract for every user. If two users match together, the contracts work like state machines whicht communicate together and push them into new states. Therefore in the end the passenger transfers an amount of money to the driver. So in the beginning a driver is looking for a passanger to participate his drive. Then you got two accepts, one for the driver one for the passenger. There's no error handling if one does not accept at the moment, but if both accept the two contracts begin to interact together. When they arrive they send an acknowledge, same like before if both acknowledge the transfer gets triggered.
