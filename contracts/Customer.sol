@@ -21,13 +21,15 @@ state public currentState;
 bool public acc;
 bool public ack;
 uint public price;
+uint public balance;
 
 // -- Constructor --
 function Customer() payable public {
     customerAddress = address(this);
     currentState = state.unused;
-    price = 0.5 ether;
+    price = 5;
     owner = msg.sender;
+    balance = 100;
 }
 
 
@@ -35,8 +37,12 @@ function Customer() payable public {
 // -- getters and setters --
 // -------------------------
 
-function getPrice() view returns (uint p){
+function getPrice() view returns (uint p) {
     p = price;
+}
+
+function getBalance() view returns (uint p) {
+    p = balance;
 }
 
 function getPartnerAddress() view returns (address a) {
@@ -104,7 +110,8 @@ function dAck(bool a) public {
     if (this.getAck() && pass.getAck()) {
         this.setState(state.unused);
         pass.setState(state.unused);
-        //this.getCustomerAddress().transfer(this.getPrice());
+        this.incrementBal();
+        pass.decrementBal();
     }
 }
 
@@ -114,7 +121,7 @@ function dAck(bool a) public {
 
 //passanger accepts the tour
 function pAccept(address driver) public {
-   // require ( > msg.value); test if enough ether???
+    require (balance > price);
     Customer driv = Customer(driver);
     driv.setPartnerAddress(getCustomerAddress());
     acc = true;
@@ -132,9 +139,17 @@ function pAck(bool a) public {
     if (this.getAck() && driv.getAck()) {
         this.setState(state.unused);
         driv.setState(state.unused);
-        //driv.getCustomerAddress().transfer(driv.getPrice());
-        
+        driv.incrementBal();
+        this.decrementBal();        
     }
 }
 
+// Payment system
+function decrementBal() public {
+    balance -= price;
+}
+
+function incrementBal() public {
+    balance += price;
+}
 }
