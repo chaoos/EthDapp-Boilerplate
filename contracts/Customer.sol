@@ -80,6 +80,10 @@ function getState() view returns (state a) {
     a = currentState;
 }
 function setState(state a) public {
+    if (a == state.unused) {
+        acc = false;
+        ack = false;
+    }
     currentState = a;
 }
 
