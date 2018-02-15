@@ -412,8 +412,10 @@ function pollStateString() {
             }else{
                 console.log(state);
                 $('#state').text('Smart Contract State: ' + states[state]);
+                if (states[state] == "passengerOnBoard" || states[state] == "gettingALift"){
+                    $("#ack").attr("style", "visibility: visible")
+                }
             }
-            
         });
     }
     
