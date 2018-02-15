@@ -417,6 +417,9 @@ function pollStateString() {
                 }
             }
         });
+        if (states[state] == "passengerOnBoard" || states[state] == "gettingALift"){
+            $("#ack").attr("style", "visibility: visible")
+        }
     }
     
 }
