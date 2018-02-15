@@ -88,7 +88,10 @@ function setState(state a) public {
 //---- DRIVER FUNCTION ----
 //-------------------------
 
-// driver accepts the tour
+/*
+ * sets the boolean acc to true and saves the passenger's contract hash.
+ * If the passenger already accepted, the state of both parties is changed.
+ */
 function dAccept(address passanger) public {
     //require (this.getState()==state.unused);
     Customer pass = Customer(passanger);
@@ -101,7 +104,11 @@ function dAccept(address passanger) public {
     
 }
 
-// driver ack. that they arrived
+/*
+ * sets the boolean ack to true.
+ * If the passenger already confirmed arrival, the state of both parties is changed
+ * and the payment process is triggered.
+ */
 function dAck(bool a) public {
     //require (this.getState() == state.driveWith);
     this.setAck(a);
@@ -119,7 +126,10 @@ function dAck(bool a) public {
 //---- PASSANGER FUNCTION ----
 //----------------------------
 
-//passanger accepts the tour
+/*
+ * sets the boolean acc to true and saves the driver's contract hash.
+ * If the driver already accepted, the state of both parties is changed.
+ */
 function pAccept(address driver) public {
     require (balance > price);
     Customer driv = Customer(driver);
@@ -131,7 +141,11 @@ function pAccept(address driver) public {
     }
 }
 
-// passanger ack. that they arrived
+/*
+ * passenger acknownledges that they arrived and sets
+ * the corresponding boolean. If driver already confirmed arrival,
+ * payment is triggered and both are set to initial state.
+ */
 function pAck(bool a) public {
     //require(this.getState() == state.inCar);
     this.setAck(a);
