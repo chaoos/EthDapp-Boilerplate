@@ -22,7 +22,12 @@ address public partnerAddress;
 state public currentState;
 bool public acc;
 bool public ack;
+uint public price;
 
+
+function getPrice() view returns (uint p){
+    p = price;
+}
 
 
 
@@ -67,11 +72,11 @@ function setState(state a) public {
 
 
 
-function Customer() public {
+function Customer() public payable {
     customerAddress = msg.sender;
     currentState = state.unused;
+    price = msg.value;
 }
-
 
 
 //-------------------------
@@ -80,7 +85,7 @@ function Customer() public {
 
 // driver accepts the tour
 function dAccept(address passanger) public {
-    require (this.getState()==state.unused);
+    //require (this.getState()==state.unused);
     Customer pass = Customer(passanger);
     pass.setPartnerAddress(getCustomerAddress());
     acc = true;
@@ -93,14 +98,14 @@ function dAccept(address passanger) public {
 
 // driver ack. that they arrived
 function dAck(bool a) public {
-    require (this.getState() == state.driveWith);
+    //require (this.getState() == state.driveWith);
     this.setAck(a);
     Customer pass = Customer(this.getPartnerAddress());
 
     if (this.getAck() && pass.getAck()) {
         this.setState(state.driveAlone);
         pass.setState(state.delivered);
-        
+        this.getCustomerAddress().transfer(this.getPrice());
     }
     
    
@@ -124,8 +129,16 @@ function pAccept(address driver) public {
 
 // passanger ack. that they arrived
 function pAck(bool a) public {
-    
-    
+    //require(this.getState() == state.inCar);
+    this.setAck(a);
+    Customer driv = Customer(this.getPartnerAddress());
+    if (this.getAck() && driv.getAck()) {
+        this.setState(state.unused);
+        driv.setState(state.driveAlone);
+        driv.getCustomerAddress().transfer(driv.getPrice());
+
+    }
+
 }
 
 }
