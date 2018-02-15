@@ -408,10 +408,11 @@ function pollStateString() {
         contractInstance = web3.eth.contract(contractAbi).at(addr);
         contractInstance.getState(function (err, state) {
             if (err) {
-                console.error(err);
-            }else
-            console.log(state);
-            $('#state').text('Smart Contract State: ' + states[state]);
+                console.error("Error: " + err);
+            }else{
+                console.log(state);
+                $('#state').text('Smart Contract State: ' + states[state]);
+            }
             
         });
     }
