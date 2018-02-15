@@ -1,21 +1,18 @@
 pragma solidity ^0.4.18;
 
 /*
-   a simple introduction smart contract
-   with an example of how to set and get values in Solidity
+   Contract for every user: 
+   independent if you're a driver or passanger 
 */
 
 contract Customer {
 
 /* States:
 * 0: unused
-* 1: driveAlone
-* 2: driveWith
-* 3: waiting
-* 4: inCar
-* 5: delivered
+* 1: driveWith
+* 3: inCar
 */
-enum state {unused, driveAlone, driveWith, waiting, inCar, delivered}
+enum state {unused, driveWith, inCar}
 
 address owner;
 address public customerAddress;
@@ -25,12 +22,22 @@ bool public acc;
 bool public ack;
 uint public price;
 
+// -- Constructor --
+function Customer() payable public {
+    customerAddress = address(this);
+    currentState = state.unused;
+    price = 0.5 ether;
+    owner = msg.sender;
+}
+
+
+// -------------------------
+// -- getters and setters --
+// -------------------------
 
 function getPrice() view returns (uint p){
     p = price;
 }
-
-
 
 function getPartnerAddress() view returns (address a) {
     a = partnerAddress;
@@ -56,7 +63,6 @@ function setAcc(bool a) public {
     acc = a;
 }
 
-
 function getAck() view returns (bool a) {
     a = ack;
 }
@@ -69,15 +75,6 @@ function getState() view returns (state a) {
 }
 function setState(state a) public {
     currentState = a;
-}
-
-
-
-function Customer() payable public {
-    customerAddress = address(this);
-    currentState = state.unused;
-    price = msg.value;
-    owner = msg.sender;
 }
 
 
@@ -107,10 +104,8 @@ function dAck(bool a) public {
     if (this.getAck() && pass.getAck()) {
         this.setState(state.unused);
         pass.setState(state.unused);
-        this.getCustomerAddress().transfer(this.getPrice());
+        //this.getCustomerAddress().transfer(this.getPrice());
     }
-    
-   
 }
 
 //----------------------------
@@ -138,9 +133,8 @@ function pAck(bool a) public {
         this.setState(state.unused);
         driv.setState(state.unused);
         //driv.getCustomerAddress().transfer(driv.getPrice());
-
+        
     }
-
 }
 
 }
