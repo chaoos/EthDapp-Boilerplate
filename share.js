@@ -317,9 +317,9 @@ $(window).on('load', function() {
     
     $('#my-form').on('submit', function(e) {
         e.preventDefault(); // cancel the actual submit
-        var me = $('#pHash').val(); // my conract address
-        var you = $('#dHash').val(); // others contract address
-        var iam = $('#pHash').val(); // Driver or Passenger
+        var me = $('#me').val(); // my conract address
+        var you = $('#you').val(); // others contract address
+        var iam = $('#iam').val(); // Driver or Passenger
 
         var contractInstance = web3.eth.contract(contractAbi).at(me);
 
@@ -351,9 +351,9 @@ $(window).on('load', function() {
 
     $('#happy-form').on('submit', function(e) {
         e.preventDefault(); // cancel the actual submit
-        var me = $('#pHash').val(); // my conract address
-        var you = $('#dHash').val(); // others contract address
-        var iam = $('#pHash').val(); // Driver or Passenger
+        var me = $('#me').val(); // my conract address
+        var you = $('#you').val(); // others contract address
+        var iam = $('#iam').val(); // Driver or Passenger
 
         var happy = $('#happy').is(':checked'); // true or false
         var contractInstance = web3.eth.contract(contractAbi).at(me);
