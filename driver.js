@@ -1,0 +1,227 @@
+$(window).on('load', function() {
+    
+    //var contractAddress = "0x9a0F2Ca2EaA0429D4140fdE9F1bcFbBB580E7A3A"; // in Ropsten testnet!
+    var contractAbi = [
+        {
+            "constant": false,
+            "inputs": [
+                {
+                    "name": "passanger",
+                    "type": "string"
+                }
+            ],
+            "name": "dAccept",
+            "outputs": [],
+            "payable": false,
+            "stateMutability": "nonpayable",
+            "type": "function"
+        },
+        {
+            "constant": false,
+            "inputs": [
+                {
+                    "name": "happy",
+                    "type": "bool"
+                }
+            ],
+            "name": "dAck",
+            "outputs": [],
+            "payable": false,
+            "stateMutability": "nonpayable",
+            "type": "function"
+        },
+        {
+            "constant": true,
+            "inputs": [],
+            "name": "parnterAddress",
+            "outputs": [
+                {
+                    "name": "",
+                    "type": "address"
+                }
+            ],
+            "payable": false,
+            "stateMutability": "view",
+            "type": "function"
+        },
+        {
+            "constant": true,
+            "inputs": [],
+            "name": "currentState",
+            "outputs": [
+                {
+                    "name": "",
+                    "type": "uint8"
+                }
+            ],
+            "payable": false,
+            "stateMutability": "view",
+            "type": "function"
+        },
+        {
+            "constant": true,
+            "inputs": [],
+            "name": "getState",
+            "outputs": [
+                {
+                    "name": "s",
+                    "type": "uint8"
+                }
+            ],
+            "payable": false,
+            "stateMutability": "view",
+            "type": "function"
+        },
+        {
+            "constant": true,
+            "inputs": [
+                {
+                    "name": "account",
+                    "type": "address"
+                }
+            ],
+            "name": "balances",
+            "outputs": [
+                {
+                    "name": "",
+                    "type": "uint256"
+                }
+            ],
+            "payable": false,
+            "stateMutability": "view",
+            "type": "function"
+        },
+        {
+            "constant": true,
+            "inputs": [],
+            "name": "customerAddress",
+            "outputs": [
+                {
+                    "name": "",
+                    "type": "address"
+                }
+            ],
+            "payable": false,
+            "stateMutability": "view",
+            "type": "function"
+        },
+        {
+            "constant": false,
+            "inputs": [
+                {
+                    "name": "happy",
+                    "type": "bool"
+                }
+            ],
+            "name": "pAck",
+            "outputs": [],
+            "payable": false,
+            "stateMutability": "nonpayable",
+            "type": "function"
+        },
+        {
+            "constant": false,
+            "inputs": [
+                {
+                    "name": "driver",
+                    "type": "string"
+                }
+            ],
+            "name": "pAccept",
+            "outputs": [],
+            "payable": false,
+            "stateMutability": "nonpayable",
+            "type": "function"
+        },
+        {
+            "inputs": [],
+            "payable": false,
+            "stateMutability": "nonpayable",
+            "type": "constructor"
+        }
+    ];
+
+    // Checking if Web3 has been injected by the browser (Mist/MetaMask)
+    if (typeof web3 !== 'undefined') {
+        // Use Mist/MetaMask's provider
+        $('#status').text('I has web3!!!');
+        window.web3 = new Web3(web3.currentProvider);
+    } else {
+        var errorMsg = 'I doesn\'t has web3 :( Please open in Google Chrome Browser and install the Metamask extension.';
+        $('#status').text(errorMsg);
+        console.log(errorMsg);
+        return;
+    }
+    
+    // create instance of contract object that we use to interface the smart contract
+    /*var contractInstance = web3.eth.contract(contractAbi).at(contractAddress);
+    contractInstance.getGreeting(function(error, greeting) {
+        if (error) {
+            var errorMsg = 'error reading greeting from smart contract: ' + error;
+            $('#status').text(errorMsg);
+            console.log(errorMsg);
+            return;
+        }
+        $('#status').text('greeting from contract: ' + greeting);
+    });*/
+
+    // create instance of contract object that we use to interface the smart contract
+    
+    // POLL state
+    var states = ["unused", "driveAlone", "driveWith", "waiting", "inCar", "delivered"]; 
+    $('#poll').click(function (e){
+        var me = $('#dHash').val();
+        var contractInstance = web3.eth.contract(contractAbi).at(me);
+        e.preventDefault(); // cancel the actual submit
+        var me = $('#dHash').val();
+        var you = $('#pHash').val();
+        contractInstance.getState(function(error, state) {
+            if (error) {
+                var errorMsg = 'error reading greeting from smart contract: ' + error;
+                $('#state').html(errorMsg);
+                console.log(errorMsg);
+                return;
+            }
+            console.log(state);
+            $('#state').html('State: ' + states[state]);
+        });
+    });
+
+
+    $('#my-form').on('submit', function(e) {
+        e.preventDefault(); // cancel the actual submit
+        var me = $('#dHash').val();
+        var you = $('#pHash').val();
+
+        /*const deploy = async () => {
+            accounts = await web3.eth.getAccounts();
+            console.log('Attempting to deploy from account', accounts[0]);
+        
+            const result = await new web3.eth.Contract(JSON.parse(interface))
+                .deploy({ data: bytecode })
+                .send({ gas: '1000000', from: accounts[0]});
+        
+            console.log('Contract deployed to', result.options.address);
+        };
+        deploy();*/
+
+        var contractInstance = web3.eth.contract(contractAbi).at(me);
+        //console.log(contractInstance);
+
+        contractInstance.dAccept(you, function(error, txHash) {
+            if (error) {
+                var errorMsg = 'error calling pAccept to smart contract: ' + error;
+                $('#status').text(errorMsg);
+                console.log(errorMsg);
+                return;
+            }
+            $('#status').text('submitted request to blockchain, transaction hash: ' + txHash + ', dAccept: ' + you);
+        });
+    });
+
+});
+
+function cb(error, response) {
+    // callback as helper function for debugging purposes
+    console.log('error: ' + error + ', response: ' + response);
+}
