@@ -1,0 +1,25 @@
+{
+  "name": "EthDapp-Boilerplate",
+  "version": "1.0.0",
+  "description": "",
+  "main": "custom.js",
+  "dependencies": {
+    "ethereumjs-testrpc": "^6.0.3",
+    "truffle": "^4.0.6"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/chaoos/EthDapp-Boilerplate.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/chaoos/EthDapp-Boilerplate/issues"
+  },
+  "homepage": "https://github.com/chaoos/EthDapp-Boilerplate#readme"
+}
