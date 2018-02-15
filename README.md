@@ -14,8 +14,8 @@ resulting in private keys:
 ```
 Available Accounts
 ==================
-(0) 0x425a9fc174c4d5ecbfd6798bd08884f0742a8b3d
-(1) 0x285e2ed5c93f237927840070ab4ff6da36999115
+(0) 0x425a9fc174c4d5ecbfd6798bd08884f0742a8b3d //Passenger
+(1) 0x285e2ed5c93f237927840070ab4ff6da36999115 //Driver
 (2) 0x0737152f6889103bf923b0d87bac0ee5cae901e4
 
 Private Keys
