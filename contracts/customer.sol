@@ -7,10 +7,6 @@ pragma solidity ^0.4.18;
 
 contract Customer {
 
-address public customerAddress;
-address public parnterAddress;
-mapping (address => uint) public balances;
-
 /* States:
 * 1: unused
 * 2: driveAlone
@@ -20,17 +16,62 @@ mapping (address => uint) public balances;
 * 6: delivered
 */
 enum state {unused, driveAlone, driveWith, waiting, inCar, delivered}
-state public currentState;
 
-function Customer() public{
+address public customerAddress;
+address public partnerAddress;
+state public currentState;
+bool public acc;
+bool public ack;
+
+
+
+
+function getPartnerAddress() view returns (address a) {
+    a = partnerAddress;
+}
+
+function setPartnerAddress(address a) public {
+    partnerAddress = a;
+}
+
+function getCustomerAddress() view returns (address a) {
+    a = customerAddress;
+}
+
+function setCustomerAddress(address a) public {
+    customerAddress = a;
+}
+
+function getAcc() view returns (bool a) {
+    a = acc;
+}
+
+function setAcc(bool a) public {
+    acc = a;
+}
+
+
+function getAck() view returns (bool a) {
+    a = ack;
+}
+function setAck(bool a) public {
+   ack = a;
+}
+
+function getState() view returns (state a) {
+    a = currentState;
+}
+function setState(state a) public {
+    currentState = a;
+}
+
+
+
+function Customer() public {
     customerAddress = msg.sender;
     currentState = state.unused;
-    balances[customerAddress] = 100;
 }
 
-function balances(address account) public view returns (uint) {
-    return balances[account];
-}
 
 
 //-------------------------
@@ -39,12 +80,30 @@ function balances(address account) public view returns (uint) {
 
 // driver accepts the tour
 function dAccept(address passanger) public {
+    require (this.getState()==state.unused);
+    Customer pass = Customer(passanger);
+    pass.setPartnerAddress(getCustomerAddress());
+    acc = true;
+    if (pass.getAcc()) {
+        this.setState(state.driveWith);
+        pass.setState(state.inCar);
+    }
     
 }
 
 // driver ack. that they arrived
-function dAck(address driver) public {
+function dAck(bool a) public {
+    require (this.getState() == state.driveWith);
+    this.setAck(a);
+    Customer pass = Customer(this.getPartnerAddress());
 
+    if (this.getAck() && pass.getAck()) {
+        this.setState(state.driveAlone);
+        pass.setState(state.delivered);
+        
+    }
+    
+   
 }
 
 //----------------------------
@@ -53,11 +112,19 @@ function dAck(address driver) public {
 
 //passanger accepts the tour
 function pAccept(address driver) public {
-
+   // require ( > msg.value); test if enough ether???
+    Customer driv = Customer(driver);
+    driv.setPartnerAddress(getCustomerAddress());
+    acc = true;
+    if (driv.getAcc()) {
+        this.setState(state.inCar);
+        driv.setState(state.driveWith);
+    }
 }
 
 // passanger ack. that they arrived
-function pAck(address driver) public {
+function pAck(bool a) public {
+    
     
 }
 
