@@ -1,10 +1,10 @@
 # EthDapp-Boilerplate
 A minimal, frontend-only decentralized application (Dapp) running on the Ethereum blockchain
 
-###dev
+### dev workflow
 redeploy all smart contracts
 ```
-./testrpc > testrpc.log
+./testrpc 1> testrpc.log
 truffle migrate --reset
 python -m SimpleHTTPServer
 ```
