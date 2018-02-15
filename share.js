@@ -315,7 +315,7 @@ $(window).on('load', function() {
         return;
     }
     
-    $('#my-form').on('submit', function(e) {
+    $('#match-form').on('submit', function(e) {
         e.preventDefault(); // cancel the actual submit
         var me = $('#me').val(); // my conract address
         var you = $('#you').val(); // others contract address
@@ -324,7 +324,7 @@ $(window).on('load', function() {
         var contractInstance = web3.eth.contract(contractAbi).at(me);
 
         if (iam == "Driver") {
-            console.log("calling dAccept");
+            console.log("calling dAccept as Driver");
             contractInstance.dAccept(you, function(error, txHash) {
                 if (error) {
                     var errorMsg = 'error calling dAccept to smart contract: ' + error;
@@ -335,7 +335,7 @@ $(window).on('load', function() {
                 $('#status').text('submitted request to blockchain, transaction hash: ' + txHash);
             });
         } else if (iam == "Passenger") {
-            console.log("calling pAccept");
+            console.log("calling pAccept as Passenger");
             contractInstance.pAccept(you, function(error, txHash) {
                 if (error) {
                     var errorMsg = 'error calling pAccept to smart contract: ' + error;
@@ -359,7 +359,7 @@ $(window).on('load', function() {
         var contractInstance = web3.eth.contract(contractAbi).at(me);
 
         if (iam == "Driver") {
-            console.log("calling dAck");
+            console.log("calling dAck as Driver");
             contractInstance.dAck(happy, function(error, txHash) {
                 if (error) {
                     var errorMsg = 'error calling pAccept to smart contract: ' + error;
@@ -370,7 +370,7 @@ $(window).on('load', function() {
                 $('#status').text('submitted request to blockchain, transaction hash: ' + txHash);
             });
         } else if (iam == "Passenger") {
-            console.log("calling pAck");
+            console.log("calling pAck as Passenger");
             contractInstance.pAck(happy, function(error, txHash) {
                 if (error) {
                     var errorMsg = 'error calling pAccept to smart contract: ' + error;
