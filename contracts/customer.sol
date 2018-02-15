@@ -105,8 +105,8 @@ function dAck(bool a) public {
     Customer pass = Customer(this.getPartnerAddress());
 
     if (this.getAck() && pass.getAck()) {
-        this.setState(state.driveAlone);
-        pass.setState(state.delivered);
+        this.setState(state.unused);
+        pass.setState(state.unused);
         this.getCustomerAddress().transfer(this.getPrice());
     }
     
@@ -136,8 +136,8 @@ function pAck(bool a) public {
     Customer driv = Customer(this.getPartnerAddress());
     if (this.getAck() && driv.getAck()) {
         this.setState(state.unused);
-        driv.setState(state.driveAlone);
-        driv.getCustomerAddress().transfer(driv.getPrice());
+        driv.setState(state.unused);
+        //driv.getCustomerAddress().transfer(driv.getPrice());
 
     }
 
