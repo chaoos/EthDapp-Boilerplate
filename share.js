@@ -403,7 +403,7 @@ function pollStateString() {
     
     if (addr !== "") {
         //constant states
-        const states = ["unused", "driveAlone", "driveWith", "waiting", "inCar", "delivered"]; 
+        const states = ["available", "passengerOnBoard", "gettingALift"]; 
         
         contractInstance = web3.eth.contract(contractAbi).at(addr);
         contractInstance.getState(function (err, state) {
