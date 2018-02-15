@@ -14,7 +14,8 @@ enum State{unused, driveAlone, driveWith, waiting, inCar, delivered};
 
 function Customer() public{
     customerAddress = msg.sender;
-    balances[cusomterAddress] = 100;
+    this.State = unused;
+    balances[customerAddress] = 100;
 }
 
 function balances(address account) public view returns (uint) {
