@@ -315,33 +315,71 @@ $(window).on('load', function() {
         return;
     }
     
-    // create instance of contract object that we use to interface the smart contract
-    /*var contractInstance = web3.eth.contract(contractAbi).at(contractAddress);
-    contractInstance.getGreeting(function(error, greeting) {
-        if (error) {
-            var errorMsg = 'error reading greeting from smart contract: ' + error;
-            $('#status').text(errorMsg);
-            console.log(errorMsg);
-            return;
-        }
-        $('#status').text('greeting from contract: ' + greeting);
-    });*/
+    $('#my-form').on('submit', function(e) {
+        e.preventDefault(); // cancel the actual submit
+        var me = $('#pHash').val(); // my conract address
+        var you = $('#dHash').val(); // others contract address
+        var iam = $('#pHash').val(); // Driver or Passenger
 
-    var me = window.parent.$('#pHash').val();
-    var states = ["unused", "driveAlone", "driveWith", "waiting", "inCar", "delivered"]; 
+        var contractInstance = web3.eth.contract(contractAbi).at(me);
 
-    // create instance of contract object that we use to interface the smart contract
-    var contractInstance = web3.eth.contract(contractAbi).at(me);
-    contractInstance.getState(function(error, state) {
-        if (error) {
-            var errorMsg = 'error reading greeting from smart contract: ' + error;
-            $('#state').html(errorMsg);
-            console.log(errorMsg);
-            return;
+        if (iam == "Driver") {
+            console.log("calling dAccept");
+            contractInstance.dAccept(you, function(error, txHash) {
+                if (error) {
+                    var errorMsg = 'error calling dAccept to smart contract: ' + error;
+                    $('#status').text(errorMsg);
+                    console.log(errorMsg);
+                    return;
+                }
+                $('#status').text('submitted request to blockchain, transaction hash: ' + txHash);
+            });
+        } else if (iam == "Passenger") {
+            console.log("calling pAccept");
+            contractInstance.pAccept(you, function(error, txHash) {
+                if (error) {
+                    var errorMsg = 'error calling pAccept to smart contract: ' + error;
+                    $('#status').text(errorMsg);
+                    console.log(errorMsg);
+                    return;
+                }
+                $('#status').text('submitted request to blockchain, transaction hash: ' + txHash);
+            });            
         }
-        $('#state').html('State: ' + states[state]);
-        if (states[state] == "inCar"){
-            parent.window.$('#ack').attr("style", "visibility: visible");
+    });
+
+
+    $('#happy-form').on('submit', function(e) {
+        e.preventDefault(); // cancel the actual submit
+        var me = $('#pHash').val(); // my conract address
+        var you = $('#dHash').val(); // others contract address
+        var iam = $('#pHash').val(); // Driver or Passenger
+
+        var happy = $('#happy').is(':checked'); // true or false
+        var contractInstance = web3.eth.contract(contractAbi).at(me);
+
+        if (iam == "Driver") {
+            console.log("calling dAck");
+            contractInstance.dAck(happy, function(error, txHash) {
+                if (error) {
+                    var errorMsg = 'error calling pAccept to smart contract: ' + error;
+                    $('#status').text(errorMsg);
+                    console.log(errorMsg);
+                    return;
+                }
+                $('#status').text('submitted request to blockchain, transaction hash: ' + txHash);
+            });
+        } else if (iam == "Passenger") {
+            console.log("calling pAck");
+            contractInstance.pAck(happy, function(error, txHash) {
+                if (error) {
+                    var errorMsg = 'error calling pAccept to smart contract: ' + error;
+                    $('#status').text(errorMsg);
+                    console.log(errorMsg);
+                    return;
+                }
+                $('#status').text('submitted request to blockchain, transaction hash: ' + txHash);
+            });
         }
     });
 

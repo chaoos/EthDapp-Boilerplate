@@ -6,21 +6,7 @@ $(window).on('load', function() {
             "constant": false,
             "inputs": [
                 {
-                    "name": "passanger",
-                    "type": "string"
-                }
-            ],
-            "name": "dAccept",
-            "outputs": [],
-            "payable": false,
-            "stateMutability": "nonpayable",
-            "type": "function"
-        },
-        {
-            "constant": false,
-            "inputs": [
-                {
-                    "name": "happy",
+                    "name": "a",
                     "type": "bool"
                 }
             ],
@@ -28,20 +14,6 @@ $(window).on('load', function() {
             "outputs": [],
             "payable": false,
             "stateMutability": "nonpayable",
-            "type": "function"
-        },
-        {
-            "constant": true,
-            "inputs": [],
-            "name": "parnterAddress",
-            "outputs": [
-                {
-                    "name": "",
-                    "type": "address"
-                }
-            ],
-            "payable": false,
-            "stateMutability": "view",
             "type": "function"
         },
         {
@@ -59,12 +31,26 @@ $(window).on('load', function() {
             "type": "function"
         },
         {
+            "constant": false,
+            "inputs": [
+                {
+                    "name": "passanger",
+                    "type": "address"
+                }
+            ],
+            "name": "dAccept",
+            "outputs": [],
+            "payable": false,
+            "stateMutability": "nonpayable",
+            "type": "function"
+        },
+        {
             "constant": true,
             "inputs": [],
             "name": "getState",
             "outputs": [
                 {
-                    "name": "s",
+                    "name": "a",
                     "type": "uint8"
                 }
             ],
@@ -74,17 +60,96 @@ $(window).on('load', function() {
         },
         {
             "constant": true,
-            "inputs": [
+            "inputs": [],
+            "name": "getPartnerAddress",
+            "outputs": [
                 {
-                    "name": "account",
+                    "name": "a",
                     "type": "address"
                 }
             ],
-            "name": "balances",
+            "payable": false,
+            "stateMutability": "view",
+            "type": "function"
+        },
+        {
+            "constant": false,
+            "inputs": [
+                {
+                    "name": "a",
+                    "type": "address"
+                }
+            ],
+            "name": "setPartnerAddress",
+            "outputs": [],
+            "payable": false,
+            "stateMutability": "nonpayable",
+            "type": "function"
+        },
+        {
+            "constant": true,
+            "inputs": [],
+            "name": "getCustomerAddress",
+            "outputs": [
+                {
+                    "name": "a",
+                    "type": "address"
+                }
+            ],
+            "payable": false,
+            "stateMutability": "view",
+            "type": "function"
+        },
+        {
+            "constant": true,
+            "inputs": [],
+            "name": "getAcc",
+            "outputs": [
+                {
+                    "name": "a",
+                    "type": "bool"
+                }
+            ],
+            "payable": false,
+            "stateMutability": "view",
+            "type": "function"
+        },
+        {
+            "constant": false,
+            "inputs": [
+                {
+                    "name": "a",
+                    "type": "bool"
+                }
+            ],
+            "name": "setAcc",
+            "outputs": [],
+            "payable": false,
+            "stateMutability": "nonpayable",
+            "type": "function"
+        },
+        {
+            "constant": false,
+            "inputs": [
+                {
+                    "name": "a",
+                    "type": "uint8"
+                }
+            ],
+            "name": "setState",
+            "outputs": [],
+            "payable": false,
+            "stateMutability": "nonpayable",
+            "type": "function"
+        },
+        {
+            "constant": true,
+            "inputs": [],
+            "name": "partnerAddress",
             "outputs": [
                 {
                     "name": "",
-                    "type": "uint256"
+                    "type": "address"
                 }
             ],
             "payable": false,
@@ -109,7 +174,35 @@ $(window).on('load', function() {
             "constant": false,
             "inputs": [
                 {
-                    "name": "happy",
+                    "name": "a",
+                    "type": "address"
+                }
+            ],
+            "name": "setCustomerAddress",
+            "outputs": [],
+            "payable": false,
+            "stateMutability": "nonpayable",
+            "type": "function"
+        },
+        {
+            "constant": true,
+            "inputs": [],
+            "name": "acc",
+            "outputs": [
+                {
+                    "name": "",
+                    "type": "bool"
+                }
+            ],
+            "payable": false,
+            "stateMutability": "view",
+            "type": "function"
+        },
+        {
+            "constant": false,
+            "inputs": [
+                {
+                    "name": "a",
                     "type": "bool"
                 }
             ],
@@ -120,11 +213,39 @@ $(window).on('load', function() {
             "type": "function"
         },
         {
+            "constant": true,
+            "inputs": [],
+            "name": "getPrice",
+            "outputs": [
+                {
+                    "name": "p",
+                    "type": "uint256"
+                }
+            ],
+            "payable": false,
+            "stateMutability": "view",
+            "type": "function"
+        },
+        {
+            "constant": true,
+            "inputs": [],
+            "name": "price",
+            "outputs": [
+                {
+                    "name": "",
+                    "type": "uint256"
+                }
+            ],
+            "payable": false,
+            "stateMutability": "view",
+            "type": "function"
+        },
+        {
             "constant": false,
             "inputs": [
                 {
                     "name": "driver",
-                    "type": "string"
+                    "type": "address"
                 }
             ],
             "name": "pAccept",
@@ -134,9 +255,51 @@ $(window).on('load', function() {
             "type": "function"
         },
         {
+            "constant": true,
             "inputs": [],
+            "name": "getAck",
+            "outputs": [
+                {
+                    "name": "a",
+                    "type": "bool"
+                }
+            ],
+            "payable": false,
+            "stateMutability": "view",
+            "type": "function"
+        },
+        {
+            "constant": false,
+            "inputs": [
+                {
+                    "name": "a",
+                    "type": "bool"
+                }
+            ],
+            "name": "setAck",
+            "outputs": [],
             "payable": false,
             "stateMutability": "nonpayable",
+            "type": "function"
+        },
+        {
+            "constant": true,
+            "inputs": [],
+            "name": "ack",
+            "outputs": [
+                {
+                    "name": "",
+                    "type": "bool"
+                }
+            ],
+            "payable": false,
+            "stateMutability": "view",
+            "type": "function"
+        },
+        {
+            "inputs": [],
+            "payable": true,
+            "stateMutability": "payable",
             "type": "constructor"
         }
     ];
