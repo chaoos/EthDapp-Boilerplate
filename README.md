@@ -8,3 +8,5 @@ redeploy all smart contracts
 truffle migrate --reset
 python -m SimpleHTTPServer
 ```
+use the same addresses when restarting testrpc
+`./testrpc --accounts=3 --deterministic --mnemonic="doom and destruction"`
